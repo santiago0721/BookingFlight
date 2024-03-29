@@ -18,7 +18,7 @@ public class FlightOffersSearch {
     }
 
 
-    public static List<String> showFlights(FlightOfferSearch[] flightOffersSearches,List<String> data){
+    public static List<String> showFlights(FlightOfferSearch[] flightOffersSearches,String cant_personas){
 
         for (int i=0;i<flightOffersSearches.length;i++){
 
@@ -49,7 +49,7 @@ public class FlightOffersSearch {
         return Arrays.asList(
                 oferta.getItineraries()[0].getSegments()[0].getDeparture().getAt(),//trae la fecha del vuelo
                 oferta.getPrice().getTotal(),
-                data.get(4)//tra la cantidad de personas
+                cant_personas//tra la cantidad de personas
 
         );
 
@@ -77,6 +77,6 @@ public class FlightOffersSearch {
             System.exit(-1);
         }
 
-        showFlights(flightOffersSearches,data);
+        showFlights(flightOffersSearches,data.get(4));
     }
 }
