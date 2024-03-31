@@ -3,10 +3,7 @@ package org.example;
 
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class BookingFlight {
     public final List<String> emails = new ArrayList<>();
@@ -64,8 +61,12 @@ public class BookingFlight {
         return false;
     }
 
-    public boolean Login(String email, String password){
-        return emailExists(email) && passwordMatch(email, password);
+    public Object Login(String email, String password){
+        if (emailExists(email) && passwordMatch(email, password)){
+            return email;
+        }
+        return false;
+
     }
 
 }
