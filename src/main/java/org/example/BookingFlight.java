@@ -1,25 +1,18 @@
 package org.example;
-
-
-
-
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class BookingFlight {
 
     BookingFlight(){
-
-        List<String> data = SearchParameters();
-        FlightOffersSearch Api = new FlightOffersSearch(data);
-
-
+        try {
+            List<String> data = SearchParameters();
+            FlightOffersSearch Api = new FlightOffersSearch(data);
+        } catch (Exception e) {
+            System.out.println("Error al crear la reserva de vuelo: " + e.getMessage());
+        }
     }
-    public static List<String> SearchParameters(){
 
+    public static List<String> SearchParameters(){
         List<String> info = new ArrayList<>();
         System.out.println("bienvenido");
         Scanner scanner = new Scanner(System.in);
@@ -29,16 +22,17 @@ public class BookingFlight {
                 "Ingrese la fecha de salida:",
                 "Ingrese la fecha de llegada",
                 "Ingrese la cantidad de personas"
-                );//"2024-05-08"
+        );
 
         for(String i :data) {
             System.out.println(i);
-            info.add(scanner.nextLine());
+            String input = scanner.nextLine();
+            if (input == null || input.isEmpty()) {
+                throw new IllegalArgumentException("El valor ingresado no puede estar vacío.");
+            }
+            info.add(input);
         }
 
         return info;
-
-
     }
-
 }

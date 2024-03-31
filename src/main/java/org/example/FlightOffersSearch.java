@@ -1,11 +1,8 @@
 package org.example;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import com.amadeus.Amadeus;
-import com.amadeus.Params;
+import com.amadeus.*;
 import com.amadeus.exceptions.ResponseException;
 import com.amadeus.resources.FlightOfferSearch;
+import java.util.*;
 
 public class FlightOffersSearch {
 
@@ -17,45 +14,45 @@ public class FlightOffersSearch {
         }
     }
 
-
     public static List<String> showFlights(FlightOfferSearch[] flightOffersSearches,String cant_personas){
-
         for (int i=0;i<flightOffersSearches.length;i++){
-
             FlightOfferSearch oferta =flightOffersSearches[i];
             String horaVuelo = oferta.getItineraries()[0].getSegments()[0].getDeparture().getAt();
             String duracionVuelo = oferta.getItineraries()[0].getDuration();
             int asientosDisponibles = oferta.getNumberOfBookableSeats();
-            String precioAsiento = oferta.getPrice().getTotal(); // Obtiene el precio total del asiento
+            String precioAsiento = oferta.getPrice().getTotal();
 
             System.out.println("------------------------------------------------------------");
-            System.out.println("vuelo #" + i+1);
+            System.out.println("vuelo #" + (i+1));
             System.out.println("Hora del vuelo: " + horaVuelo);
             System.out.println("Duración del vuelo: " + duracionVuelo);
             System.out.println("Asientos disponibles: " + asientosDisponibles);
             System.out.println("Precio del asiento: " + precioAsiento);
             System.out.println("------------------------------------------------------------");
-
         }
 
-
-        //manejo de excepciones
         System.out.println("seleccione la opcion que desea adquirir, sino desea adquirir ninguna opcion precione cualquier letra fuera del rango de 1-5");
         Scanner scanner = new Scanner(System.in);
-        Integer opcion = Integer.parseInt(scanner.nextLine());
+        String input = scanner.nextLine();
+        int opcion;
+        try {
+            opcion = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("La opción ingresada no es válida.");
+        }
+
+        if (opcion < 1 || opcion > flightOffersSearches.length) {
+            throw new IllegalArgumentException("La opción seleccionada está fuera del rango.");
+        }
 
         FlightOfferSearch oferta =flightOffersSearches[opcion-1];
 
         return Arrays.asList(
-                oferta.getItineraries()[0].getSegments()[0].getDeparture().getAt(),//trae la fecha del vuelo
+                oferta.getItineraries()[0].getSegments()[0].getDeparture().getAt(),
                 oferta.getPrice().getTotal(),
-                cant_personas//tra la cantidad de personas
-
+                cant_personas
         );
-
-        }
-
-
+    }
 
     public static void SearchFlightOffers(List<String> data) throws ResponseException {
         System.out.println("Buscando ofertas de vuelo...");
@@ -72,9 +69,8 @@ public class FlightOffersSearch {
                         .and("adults",Integer.parseInt(data.get(4)))
                         .and("max", 5));
 
-        if (flightOffersSearches[0].getResponse().getStatusCode() != 200) {
-            System.out.println("Código de estado incorrecto: " + flightOffersSearches[0].getResponse().getStatusCode());
-            System.exit(-1);
+        if (flightOffersSearches == null || flightOffersSearches.length == 0) {
+            throw new IllegalStateException("No se encontraron ofertas de vuelo.");
         }
 
         showFlights(flightOffersSearches,data.get(4));
