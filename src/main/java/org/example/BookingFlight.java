@@ -11,8 +11,9 @@ public class BookingFlight {
 
     BookingFlight(){
 
-        FlightOffersSearch Api = new FlightOffersSearch();
         List<String> data = SearchParameters();
+        FlightOffersSearch Api = new FlightOffersSearch(data);
+
 
 
     }
@@ -27,7 +28,7 @@ public class BookingFlight {
                 "Ingrese la fecha de salida:",
                 "Ingrese la fecha de llegada",
                 "Ingrese la cantidad de personas"
-                );
+                );//"2024-05-08"
 
         for(String i :data) {
             System.out.println(i);
