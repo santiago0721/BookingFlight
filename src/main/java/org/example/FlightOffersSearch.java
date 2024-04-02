@@ -15,39 +15,57 @@ public class FlightOffersSearch {
 
 
     public static List<String> showFlights(FlightOfferSearch[] flightOffersSearches,String cant_personas){
+        try{
+            for (int i=0; i< flightOffersSearches.length; i++){
+                FlightOfferSearch oferta =flightOffersSearches[i];
+                String horaVuelo = oferta.getItineraries()[0].getSegments()[0].getDeparture().getAt();
+                String duracionVuelo = oferta.getItineraries()[0].getDuration();
+                int asientosDisponibles = oferta.getNumberOfBookableSeats();
+                String precioAsiento = oferta.getPrice().getTotal(); // Obtiene el precio total del asiento
 
-        for (int i=0;i<flightOffersSearches.length;i++){
+                System.out.println("------------------------------------------------------------");
+                System.out.println("Vuelo #" + (i+1));
+                System.out.println("Hora del vuelo: " + horaVuelo);
+                System.out.println("Duración del vuelo: " + duracionVuelo);
+                System.out.println("Asientos disponibles: " + asientosDisponibles);
+                System.out.println("Precio del asiento: " + precioAsiento);
+                System.out.println("------------------------------------------------------------");
 
-            FlightOfferSearch oferta =flightOffersSearches[i];
-            String horaVuelo = oferta.getItineraries()[0].getSegments()[0].getDeparture().getAt();
-            String duracionVuelo = oferta.getItineraries()[0].getDuration();
-            int asientosDisponibles = oferta.getNumberOfBookableSeats();
-            String precioAsiento = oferta.getPrice().getTotal(); // Obtiene el precio total del asiento
+            }
 
-            System.out.println("------------------------------------------------------------");
-            System.out.println("vuelo #" + (i+1));
-            System.out.println("Hora del vuelo: " + horaVuelo);
-            System.out.println("Duración del vuelo: " + duracionVuelo);
-            System.out.println("Asientos disponibles: " + asientosDisponibles);
-            System.out.println("Precio del asiento: " + precioAsiento);
-            System.out.println("------------------------------------------------------------");
+            System.out.println("Seleccione la opcion que desea adquirir, si no desea adquirir ninguna opcion precione cualquier letra fuera del rango de 1-5");
+            Scanner scanner = new Scanner(System.in);
+            Integer opcion = Integer.parseInt(scanner.nextLine());
+
+            if (opcion < 1 || opcion > flightOffersSearches.length){
+                System.out.println("Opción inválida. Por favor, elija una opción dentro del rango.");
+                return null;
+
+            }
+            FlightOfferSearch oferta =flightOffersSearches[opcion-1];
+
+            return Arrays.asList(
+                    oferta.getItineraries()[0].getSegments()[0].getDeparture().getAt(),//trae la fecha del vuelo
+                    oferta.getPrice().getTotal(),//precio total en euros
+                    cant_personas);//tra la cantidad de personas
+        }
+        catch (NumberFormatException e){
+            System.out.println("Por favor, ingrese un número válido.");
 
         }
+        catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("El índice está fuera del rango de las ofertas de vuelos disponibles.");
 
+        }
+        catch (NullPointerException e){
+            System.out.println("Uno de los elementos de la oferta de vuelo es nulo.");
 
-        //manejo de excepciones
-        System.out.println("seleccione la opcion que desea adquirir, sino desea adquirir ninguna opcion precione cualquier letra fuera del rango de 1-5");
-        Scanner scanner = new Scanner(System.in);
-        Integer opcion = Integer.parseInt(scanner.nextLine());
+        }
+        catch (Exception e){
+            System.out.println("Ha ocurrido un error: " + e.getMessage());
 
-        FlightOfferSearch oferta =flightOffersSearches[opcion-1];
-
-        return Arrays.asList(
-                oferta.getItineraries()[0].getSegments()[0].getDeparture().getAt(),//trae la fecha del vuelo
-                oferta.getPrice().getTotal(),//precio total en euros
-                cant_personas//tra la cantidad de personas
-
-        );
+        }
+        return null;
 
     }
 

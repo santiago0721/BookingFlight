@@ -16,7 +16,7 @@ public class BookingFlight {
 
 
         ///constructor (aqui deben ir los menus ---- recuerden hacerlo con ciclos while para que no termione el programa despues de una consulta)
-        User("prueba@gmail.com");
+        startMenu();
     }
 
     public void User(String correo ){
@@ -37,7 +37,7 @@ public class BookingFlight {
     public static List<String> SearchParameters(){
 
         List<String> info = new ArrayList<>();
-        System.out.println("bienvenido");
+        System.out.println("Bienvenido");
         Scanner scanner = new Scanner(System.in);
         List<String> data = Arrays.asList(
                 "Ingrese las siglas del aeropuesto de origen:",
@@ -70,13 +70,13 @@ public class BookingFlight {
         return false;
     }
 
-    public boolean Register(String email, String password){
+    public void Register(String email, String password){
         if (!emailExists(email)){
             emails.add(email);
             passwords.add(password);
-            System.out.println("Registro Exitoso");
+
         }
-        return false;
+
     }
 
     public String Login(String email, String password){
@@ -96,12 +96,14 @@ public class BookingFlight {
     public void startMenu() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            System.out.println("------------------------------------------------------------");
             System.out.println("Bienvenido al sistema de reservas de vuelos");
             System.out.println("1. Iniciar sesión");
             System.out.println("2. Registrarse");
             System.out.println("3. Salir");
             System.out.print("Por favor, elige una opción: ");
             String option = scanner.nextLine();
+            System.out.println("------------------------------------------------------------");
 
             switch (option) {
                 case "1":
@@ -111,7 +113,7 @@ public class BookingFlight {
                     String loginPassword = scanner.nextLine();
                     if (Login(loginEmail, loginPassword) != null) {
                         System.out.println("Inicio de sesión exitoso!");
-                        flightMenu();
+                        flightMenu(loginEmail);
                     } else {
                         System.out.println("Correo electrónico o contraseña incorrectos. Por favor, inténtalo de nuevo.");
                     }
@@ -131,9 +133,12 @@ public class BookingFlight {
             }
         }
     }
-    public void flightMenu() {
+    public void flightMenu(String correo) {
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Usuario con el correo: " + correo);
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            System.out.println("------------------------------------------------------------");
             System.out.println("Menú de vuelos");
             System.out.println("1. Reservar vuelo");
             System.out.println("2. Ver vuelos");
@@ -143,20 +148,17 @@ public class BookingFlight {
 
             switch (option) {
                 case "1":
-                    List<String> data = SearchParameters();
-                    FlightOffersSearch Api = new FlightOffersSearch(data);
+                    User(correo);
                     break;
                 case "2":
-                    System.out.print("Por favor, introduce el correo electrónico del usuario: ");
-                    String email = scanner.nextLine();
-                    List<List<String>> userReservations = getUserReservations(email);
+                    List<List<String>> userReservations = getUserReservations(correo);
                     if (userReservations.isEmpty()) {
-                        System.out.println("No hay reservas para el usuario: " + email);
+                        System.out.println("No hay reservas para el usuario: " + correo);
                     } else {
                         userReservations.forEach(reserva -> {
                             System.out.println("------------------------------------------------------------");
                             System.out.println("Fecha del vuelo: " + reserva.get(0));
-                            System.out.println("Precio total en euros: " + reserva.get(1));
+                            System.out.println("Precio total: " + reserva.get(1));
                             System.out.println("Cantidad de personas: " + reserva.get(2));
                             System.out.println("------------------------------------------------------------");
                         });
