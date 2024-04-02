@@ -19,13 +19,15 @@ public class BookingFlight {
 
     public void User(String correo ){
         //falta comprobar si el dato es nulo : si es nulo no se puede agregar a la lista y toca volver a llamar la funcion (se hace con un if)
+
         List<String> data = SearchParameters();
         List<String> reserva = Api.SearchFlightOffers(data);
-
+        if (reserva != null){
         Reservas.add(Arrays.asList(
                 reserva.get(0),reserva.get(1),reserva.get(2),correo));
 
-        System.out.println("LA RESERVA FUE EXITOSA");
+        System.out.println("LA RESERVA FUE EXITOSA");}
+
     }
 
 

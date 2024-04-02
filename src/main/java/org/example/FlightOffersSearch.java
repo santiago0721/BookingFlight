@@ -80,7 +80,7 @@ public class FlightOffersSearch {
             return a;
 
         }catch (ResponseException e) {
-            System.out.println("Error al buscar ofertas de vuelo: " + e.getMessage());
+            System.out.println("Error al buscar ofertas de vuelo: ");
             return null;
         }
 
