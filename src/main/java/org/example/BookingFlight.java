@@ -9,14 +9,30 @@ public class BookingFlight {
     public final List<String> emails = new ArrayList<>();
     public final List<String> passwords = new ArrayList<>();
 
+    public final List<List<String>> Reservas = new ArrayList<>();
+    public final FlightOffersSearch Api = new FlightOffersSearch();
     BookingFlight(){
 
-        // List<String> data = SearchParameters();
-        // FlightOffersSearch Api = new FlightOffersSearch(data);
-        startMenu();
 
+        ///constructor (aqui deben ir los menus ---- recuerden hacerlo con ciclos while para que no termione el programa despues de una consulta)
+        User("prueba@gmail.com");
+    }
+
+    public void User(String correo ){
+        //falta comprobar si el dato es nulo : si es nulo no se puede agregar a la lista y toca volver a llamar la funcion (se hace con un if)
+
+        List<String> data = SearchParameters();
+        List<String> reserva = Api.SearchFlightOffers(data);
+        if (reserva != null){
+        Reservas.add(Arrays.asList(
+                reserva.get(0),reserva.get(1),reserva.get(2),correo));
+
+
+        System.out.println("LA RESERVA FUE EXITOSA");}
 
     }
+
+
     public static List<String> SearchParameters(){
 
         List<String> info = new ArrayList<>();
