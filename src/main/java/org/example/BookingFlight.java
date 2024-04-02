@@ -104,7 +104,7 @@ public class BookingFlight {
                     String loginPassword = scanner.nextLine();
                     if (Login(loginEmail, loginPassword) != null) {
                         System.out.println("Inicio de sesión exitoso!");
-                        flightMenu();
+                        flightMenu(loginEmail);
                     } else {
                         System.out.println("Correo electrónico o contraseña incorrectos. Por favor, inténtalo de nuevo.");
                     }
@@ -124,21 +124,26 @@ public class BookingFlight {
             }
         }
     }
-    public void flightMenu() {
+    public void flightMenu(String correo) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            System.out.println("------------------------------------------------------------");
+            System.out.println("Usuario: " + correo );
             System.out.println("Menú de vuelos");
             System.out.println("1. Reservar vuelo");
             System.out.println("2. Ver vuelos");
             System.out.println("3. Salir");
             System.out.print("Por favor, elige una opción: ");
             String option = scanner.nextLine();
-
+            System.out.println("------------------------------------------------------------");
             switch (option) {
                 case "1":
-                    List<String> data = SearchParameters();
-                    FlightOffersSearch Api = new FlightOffersSearch(data);
-                    break;
+
+                    User(correo);
+
+                case "2":
+
+
 
                 case "3":
                     System.out.println("Gracias por usar nuestro sistema de reservas de vuelos. ¡Hasta luego!");
