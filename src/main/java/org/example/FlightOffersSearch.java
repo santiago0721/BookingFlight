@@ -35,10 +35,13 @@ public class FlightOffersSearch {
 
             System.out.println("Seleccione la opcion que desea adquirir, si no desea adquirir ninguna opcion precione cualquier letra fuera del rango de 1-5");
             Scanner scanner = new Scanner(System.in);
+
             Integer opcion = Integer.parseInt(scanner.nextLine());
 
             if (opcion < 1 || opcion > flightOffersSearches.length){
+                System.out.println("---------------------------------------------");
                 System.out.println("Opción inválida. Por favor, elija una opción dentro del rango.");
+                System.out.println("---------------------------------------------");
                 return null;
 
             }
@@ -98,7 +101,9 @@ public class FlightOffersSearch {
             return a;
 
         }catch (ResponseException e) {
+            System.out.println("---------------------------------------------");
             System.out.println("Error al buscar ofertas de vuelo: " + e);
+            System.out.println("---------------------------------------------");
             return null;
         }
 

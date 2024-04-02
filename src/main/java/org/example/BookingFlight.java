@@ -25,11 +25,12 @@ public class BookingFlight {
         List<String> data = SearchParameters();
         List<String> reserva = Api.SearchFlightOffers(data);
         if (reserva != null){
-        Reservas.add(Arrays.asList(
-                reserva.get(0),reserva.get(1),reserva.get(2),correo));
+            Reservas.add(Arrays.asList(
+                    reserva.get(0),reserva.get(1),reserva.get(2),correo));
 
-
-        System.out.println("LA RESERVA FUE EXITOSA");}
+            System.out.println("---------------------------------------------");
+            System.out.println("LA RESERVA FUE EXITOSA");}
+            System.out.println("---------------------------------------------");
 
     }
 
@@ -45,7 +46,7 @@ public class BookingFlight {
                 "Ingrese la fecha de salida:",
                 "Ingrese la fecha de llegada",
                 "Ingrese la cantidad de personas"
-                );
+        );
 
         for(String i :data) {
             System.out.println(i);
@@ -74,6 +75,9 @@ public class BookingFlight {
         if (!emailExists(email)){
             emails.add(email);
             passwords.add(password);
+            System.out.println("---------------------------------------------");
+            System.out.println("Registro exitoso");
+            System.out.println("---------------------------------------------");
 
         }
 
@@ -112,7 +116,9 @@ public class BookingFlight {
                     System.out.print("Por favor, introduce tu contraseña: ");
                     String loginPassword = scanner.nextLine();
                     if (Login(loginEmail, loginPassword) != null) {
+                        System.out.println("---------------------------------------------");
                         System.out.println("Inicio de sesión exitoso!");
+                        System.out.println("---------------------------------------------");
                         flightMenu(loginEmail);
                     } else {
                         System.out.println("Correo electrónico o contraseña incorrectos. Por favor, inténtalo de nuevo.");
@@ -134,15 +140,18 @@ public class BookingFlight {
         }
     }
     public void flightMenu(String correo) {
-        System.out.println("------------------------------------------------------------");
-        System.out.println("Usuario con el correo: " + correo);
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            System.out.println("------------------------------------------------------------");
+            System.out.println("------------------------------------------------------------");
+            System.out.println("Usuario con el correo: " + correo);
             System.out.println("------------------------------------------------------------");
             System.out.println("Menú de vuelos");
             System.out.println("1. Reservar vuelo");
             System.out.println("2. Ver vuelos");
-            System.out.println("3. Salir");
+            System.out.println("3. cerrar sesion");
+            System.out.println("4. Salir");
             System.out.print("Por favor, elige una opción: ");
             String option = scanner.nextLine();
 
@@ -153,8 +162,13 @@ public class BookingFlight {
                 case "2":
                     List<List<String>> userReservations = getUserReservations(correo);
                     if (userReservations.isEmpty()) {
+                        System.out.println("---------------------------------------------");
                         System.out.println("No hay reservas para el usuario: " + correo);
+                        System.out.println("---------------------------------------------");
                     } else {
+                        System.out.println("-----------------");
+                        System.out.println("MIS VUELOS");
+                        System.out.println("-----------------");
                         userReservations.forEach(reserva -> {
                             System.out.println("------------------------------------------------------------");
                             System.out.println("Fecha del vuelo: " + reserva.get(0));
@@ -166,6 +180,11 @@ public class BookingFlight {
                     break;
 
                 case "3":
+                    startMenu();
+                    break;
+
+                case "4":
+                    System.out.println("------------------------------------------------------------");
                     System.out.println("Gracias por usar nuestro sistema de reservas de vuelos. ¡Hasta luego!");
                     System.exit(0);
                 default:
