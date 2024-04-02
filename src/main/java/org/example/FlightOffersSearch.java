@@ -25,7 +25,7 @@ public class FlightOffersSearch {
             String precioAsiento = oferta.getPrice().getTotal(); // Obtiene el precio total del asiento
 
             System.out.println("------------------------------------------------------------");
-            System.out.println("vuelo #" + i+1);
+            System.out.println("vuelo #" + (i+1));
             System.out.println("Hora del vuelo: " + horaVuelo);
             System.out.println("Duración del vuelo: " + duracionVuelo);
             System.out.println("Asientos disponibles: " + asientosDisponibles);
@@ -80,7 +80,7 @@ public class FlightOffersSearch {
             return a;
 
         }catch (ResponseException e) {
-            System.out.println("Error al buscar ofertas de vuelo: ");
+            System.out.println("Error al buscar ofertas de vuelo: " + e);
             return null;
         }
 
